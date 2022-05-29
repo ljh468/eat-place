@@ -1,0 +1,39 @@
+server:
+  port: 8888
+
+spring:
+  main:
+    allow-circular-references: true
+
+#  datasource:
+#    driver-class-name: org.mariadb.jdbc.Driver
+#    url: jdbc:mariadb://localhost:3306/eatplace?characterEncoding=UTF-8&serverTimezone=UTC
+#    username: "root"
+#    password: "1234"
+  datasource:
+    url: jdbc:h2:tcp://localhost/~/eatplace
+    #    url: jdbc:h2:~/test
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        format_sql: true #To beautify or pretty print the SQL
+        show_sql: true #show sql
+#    defer-datasource-initialization: true
+
+jwt:
+  header: Authorization
+  # HS512 secretkey
+  # echo 'eat-place-spring-boot-jwt-secret-eat-place-spring-boot-jwt-secret'|base64
+  secret: ZWF0LXBsYWNlLXNwcmluZy1ib290LWp3dC1zZWNyZXQtZWF0LXBsYWNlLXNwcmluZy1ib290LWp3dC1zZWNyZXQK
+  token-validity-in-seconds: 86400
+
+logging:
+  level:
+    com.eat.eatplace: DEBUG
