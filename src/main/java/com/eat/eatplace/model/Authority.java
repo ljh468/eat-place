@@ -2,6 +2,7 @@ package com.eat.eatplace.model;
 
 import lombok.*;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -13,5 +14,6 @@ import javax.persistence.Id;
 @NoArgsConstructor
 public class Authority {
     @Id
-    private String authority_name;
+    @Column(name = "authority_name")
+    private String authorityName;
 }

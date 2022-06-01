@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.GenericFilterBean;
@@ -24,9 +25,11 @@ public class JwtFilter extends GenericFilterBean {
 
     public static final String AUTHORIZATION_HEADER = "Authorization";
 
-    @Autowired private TokenProvider tokenProvider;
+    private TokenProvider tokenProvider;
 
+    @Autowired
     public JwtFilter(TokenProvider tokenProvider) {
+        this.tokenProvider = tokenProvider;
     }
 
     /**

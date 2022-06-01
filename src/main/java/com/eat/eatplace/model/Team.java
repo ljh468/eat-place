@@ -17,6 +17,7 @@ public class Team {
      * 팀 고유번호
      */
     @Id
+    @GeneratedValue
     @Column(name = "team_seq")
     private Long teamSeq;
 
@@ -42,5 +43,5 @@ public class Team {
     /**
      * 조직 사용여부
      */
-    private String UseYn;
+    private String useYn;
 }

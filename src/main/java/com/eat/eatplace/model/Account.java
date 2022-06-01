@@ -14,20 +14,19 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "account")
+@Table(name = "acount")
 public class Account {
-
     /**
      * 회원 고유번호
      */
+    @JsonIgnore
     @Id
-    @GeneratedValue
     @Column(name = "user_seq")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userSeq;
     /**
      * 아이디
      */
-    @JsonIgnore
     @Column(name = "user_id")
     private String userId;
     /**
@@ -43,19 +42,23 @@ public class Account {
     /**
      * 나이
      */
+    @Column(name = "age")
     private Long age;
     /**
      * 성별
      */
+    @Column(name = "gender")
     @Enumerated(value = EnumType.STRING)
     private Gender gender;
     /**
      * 생년월일
      */
+    @Column(name = "birth")
     private String birth;
     /**
-     * 가입일
+     * 이메일
      */
+    @Column(name = "email")
     private String email;
     /**
      * 가입일
@@ -80,5 +83,6 @@ public class Account {
     /**
      * 유저 사용여부
      */
+    @Column(name = "use_yn")
     private String useYn;
 }

@@ -39,7 +39,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         }
         // 유저가 사용가능 하다면
         List<GrantedAuthority> grantedAuthorities = account.getAuthorities().stream()
-                .map(authority -> new SimpleGrantedAuthority(authority.getAuthority_name()))
+                .map(authority -> new SimpleGrantedAuthority(authority.getAuthorityName()))
                 .collect(Collectors.toList());
         // 아이디, 비밀번호, 권한정보를 가지고 User객체를 반환
         return new User(account.getUserId(), account.getUserPwd(), grantedAuthorities);

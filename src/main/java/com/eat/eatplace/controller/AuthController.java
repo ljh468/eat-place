@@ -39,6 +39,7 @@ public class AuthController {
         // authenticationToken을 이용해서 authenticate 메서드가 실행이 될때 locaUserByUsername 메서드가 실행됨
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
         SecurityContextHolder.getContext().setAuthentication(authentication);
+        System.out.println("authentication = " + authentication.getPrincipal());
 
         // 인증정보를 기준으로 JWT Token을 생성함
         String jwt = tokenProvider.createToken(authentication);

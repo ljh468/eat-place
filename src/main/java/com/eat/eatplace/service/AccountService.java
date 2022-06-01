@@ -3,9 +3,11 @@ package com.eat.eatplace.service;
 import com.eat.eatplace.model.Account;
 import com.eat.eatplace.model.Authority;
 import com.eat.eatplace.model.dto.AccountDto;
+import com.eat.eatplace.model.type.Gender;
 import com.eat.eatplace.repository.AccountRepository;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,13 +20,14 @@ import java.util.Optional;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AccountService {
+    @Autowired
     private AccountRepository accountRepository;
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Transactional
-    public Account getAccountInfo(AccountDto accountDto) {
-        Long user_seq = accountDto.getUserSeq();
-        Optional<Account> foundAccount = accountRepository.findById(user_seq);
+    public Account getAccountInfo(String userId) {
+        Optional<Account> foundAccount = accountRepository.findByUserId(userId);
         return foundAccount.get();
     }
 
@@ -36,7 +39,7 @@ public class AccountService {
         }
         // 유저정보가 없으면 권한 정보를 만듬
         Authority authority = Authority.builder()
-                .authority_name("ROLE_USER")
+                .authorityName("ROLE_USER")
                 .build();
         // 권한정보와 유저정보를 담아서 저장
         Account account = Account.builder()
@@ -45,12 +48,14 @@ public class AccountService {
                 .nickName(accountDto.getNickName())
                 .birth(accountDto.getBirth())
                 .email(accountDto.getEmail())
-                .gender(accountDto.getGender())
+                .gender(Gender.valueOf(accountDto.getGender()))
                 .age(accountDto.getAge())
                 .joinDt(LocalDate.now())
+                .useYn("Y")
                 .authorities(Collections.singleton(authority))
                 .build();
 
+        System.out.println("account = " + account.getUserSeq());
         return accountRepository.save(account);
     }
 }

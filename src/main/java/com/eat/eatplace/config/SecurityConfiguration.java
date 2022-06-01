@@ -71,14 +71,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 
-                // HttpServletRequest 요청에 대 접근제한을 설정
+                // HttpServletRequest 요청에 접근제한을 설정
                 .and()
                 .authorizeRequests()
-                // "/user/signup" 요청허용
+                // 토큰을 받기위한 로그인 API와 회원가입 API는 토큰이 없는 상태에서 요청이 들어오기 때문에 모두 허가
                 .antMatchers("/user/signup").permitAll()
                 .antMatchers("/user/register").permitAll()
                 .antMatchers("/api/authenticate").permitAll()
-                // 토큰을 받기위한 로그인 API와 회원가입 API는 토큰이 없는 상태에서 요청이 들어오기 때문에 모두 허가
                 // 나머지는 모두 인증을 받아야함
                 .anyRequest().authenticated()
 
