@@ -1,0 +1,13 @@
+exit
+show dbs
+db.User.insert({"name":"test"})
+show dbs
+db
+show databases
+show database
+use test
+rs.status()
+rs.config()
+rs.initiate()
+use admin
+exit

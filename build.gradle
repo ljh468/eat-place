@@ -70,9 +70,12 @@ project(":eat-api") {
 		implementation("org.springframework.boot:spring-boot-starter-web")
 		implementation("org.springframework.boot:spring-boot-devtools")
 		// DB
-		runtimeOnly ("com.h2database:h2")
+//		runtimeOnly ("com.h2database:h2")
+		// Data
+		implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
+
 		// JPA
-		implementation ("org.springframework.boot:spring-boot-starter-data-jpa")
+//		implementation ("org.springframework.boot:spring-boot-starter-data-jpa")
 		// thymeleaf
 		implementation ("org.springframework.boot:spring-boot-starter-thymeleaf")
 		// configuration
@@ -89,9 +92,10 @@ project(":eat-api") {
 project(":user-core") {
 	dependencies {
 		// db
-		runtimeOnly ("com.h2database:h2")
+//		runtimeOnly ("com.h2database:h2")
+		implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
 		// jpa
-		implementation ("org.springframework.boot:spring-boot-starter-data-jpa")
+//		implementation ("org.springframework.boot:spring-boot-starter-data-jpa")
 		// gson
 		implementation("com.google.code.gson:gson:${gsonVersion}")
 

@@ -1,4 +1,5 @@
 rootProject.name = 'eatplace'
 include 'eat-api'
 include 'user-core'
+include 'eat-docker'
 
