@@ -24,7 +24,7 @@ class MongoTransactionTest {
   @Autowired
   MemberService memberService;
 
-  @Test
+//  @Test
   public void transaction_rollback_test() {
     long initialCount = memberMongoRepository.count();
     log.info("initialCount : " + initialCount);

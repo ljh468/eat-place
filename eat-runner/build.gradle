@@ -1,0 +1,25 @@
+dependencies {
+  implementation project(path: ':eat-protobuf')
+  //gRPC
+  implementation("net.devh:grpc-spring-boot-starter:${project.ext.grpcServerSpringBootStarterVersion}")
+}
+
+apply plugin: "com.google.protobuf"
+
+protobuf {
+  protoc {
+    artifact = "com.google.protobuf:protoc:3.24.3"
+  }
+  plugins {
+    grpc {
+      artifact = "io.grpc:protoc-gen-grpc-java:1.58.0"
+    }
+  }
+  generateProtoTasks {
+    ofSourceSet("main").configureEach {
+      plugins {
+        grpc {}
+      }
+    }
+  }
+}

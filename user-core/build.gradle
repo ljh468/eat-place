@@ -5,3 +5,33 @@ bootJar {
 jar {
     enabled = true
 }
+
+dependencies {
+    // db
+//		runtimeOnly ("com.h2database:h2")
+    implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
+    // jpa
+//		implementation ("org.springframework.boot:spring-boot-starter-data-jpa")
+
+    // test
+    testCompileOnly("org.projectlombok:lombok")
+    testAnnotationProcessor("org.projectlombok:lombok")
+}
+
+// Querydsl Q Class 생성 위치
+def querydslDir = "$buildDir/generated"
+
+// Querydsl Q Class 생성 위치 지정
+tasks.withType(JavaCompile).configureEach {
+    options.getGeneratedSourceOutputDirectory().set(file(querydslDir))
+}
+
+// java source set 에 Querydsl Q Class 위치 추가
+sourceSets {
+    main.java.srcDirs += [ querydslDir ]
+}
+
+// gradle clean 시, Q Class 디렉토리까지 삭제하도록 설정
+clean {
+    delete file(querydslDir)
+}

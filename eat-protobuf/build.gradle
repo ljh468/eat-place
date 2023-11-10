@@ -1,0 +1,41 @@
+bootJar {
+    enabled = false
+}
+
+jar {
+    enabled = true
+}
+
+dependencies {
+    //gRPC
+    implementation("io.grpc:grpc-netty:${project.ext.grpcVersion}")
+    implementation("io.grpc:grpc-protobuf:${project.ext.grpcVersion}")
+    implementation("io.grpc:grpc-stub:${project.ext.grpcVersion}")
+    compileOnly("org.apache.tomcat:annotations-api:${project.ext.annotationsApiVersion}")
+}
+
+apply plugin: 'com.google.protobuf'
+
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:3.24.3"
+    }
+    plugins {
+        grpc {
+            artifact = "io.grpc:protoc-gen-grpc-java:${project.ext.grpcVersion}"
+        }
+    }
+    generateProtoTasks {
+        ofSourceSet("main").configureEach {
+            plugins {
+                grpc {}
+            }
+        }
+        all().configureEach { task ->
+            task.builtins {
+                java {}
+                csharp {}
+            }
+        }
+    }
+}
