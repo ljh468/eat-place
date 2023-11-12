@@ -1,6 +1,7 @@
 package com.eat.eatplace.grpc;
 
-import com.eat.eatplace.rpc.GameGrpc;
+import com.eat.eatplace.rpc.Game;
+import com.eat.eatplace.rpc.GameManagerGrpc;
 import com.eat.eatplace.rpc.GameRequest;
 import com.eat.eatplace.rpc.GameResponse;
 import io.grpc.stub.StreamObserver;
@@ -11,40 +12,38 @@ import java.util.UUID;
 
 @Slf4j
 @GrpcService
-public class GameService extends GameGrpc.GameImplBase {
+public class GameManagerRpcService extends GameManagerGrpc.GameManagerImplBase {
 
+  // 단일요청, 단일 응답
   @Override
-  public void requestGameStart(GameRequest request,
+  public void notifyGameStart(GameRequest request,
                                StreamObserver<GameResponse> response) {
     Long userId = request.getUserId();
     GameResponse reply = GameResponse.newBuilder()
-                                     .setGameId(UUID.randomUUID().toString())
-                                     .setBoardId(UUID.randomUUID().toString())
-                                     .setUserId(userId)
-                                     .setUserName("USER_NAME")
-                                     .setMessage("MESSAGE")
+                                     .setIsGameStart(true)
+                                     .setGame(Game.newBuilder().build())
                                      .build();
+
     response.onNext(reply);
     response.onCompleted();
   }
 
+  // 단일요청, 스트림 응답
   @Override
   public void getGame(GameRequest request,
                       StreamObserver<GameResponse> responseObserver) {
     Long userId = request.getUserId();
     for (int i = 0; i < 10; i++) {
       GameResponse reply = GameResponse.newBuilder()
-                                       .setGameId(UUID.randomUUID().toString())
-                                       .setBoardId(UUID.randomUUID().toString())
-                                       .setUserId(userId)
-                                       .setUserName("USER_NAME")
-                                       .setMessage("MESSAGE" + i)
+                                       .setIsGameStart(true)
+                                       .setGame(Game.newBuilder().build())
                                        .build();
       responseObserver.onNext(reply);
     }
     responseObserver.onCompleted();
   }
 
+  // 스트림 요청, 스트림 응답
   @Override
   public StreamObserver<GameRequest> getGames(StreamObserver<GameResponse> responseObserver) {
     return new StreamObserver<>() {
@@ -52,11 +51,8 @@ public class GameService extends GameGrpc.GameImplBase {
       @Override
       public void onNext(GameRequest request) {
         GameResponse reply = GameResponse.newBuilder()
-                                         .setGameId(UUID.randomUUID().toString())
-                                         .setBoardId(UUID.randomUUID().toString())
-                                         .setUserId(request.getUserId())
-                                         .setUserName("USER_NAME")
-                                         .setMessage("MESSAGE")
+                                         .setIsGameStart(true)
+                                         .setGame(Game.newBuilder().build())
                                          .build();
         responseObserver.onNext(reply);
         try {

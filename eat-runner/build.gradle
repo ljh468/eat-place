@@ -1,6 +1,5 @@
 dependencies {
-  implementation project(path: ':eat-protobuf')
-  //gRPC
+  implementation project(path: ':eat-grpc')//gRPC
   implementation("net.devh:grpc-spring-boot-starter:${project.ext.grpcServerSpringBootStarterVersion}")
 }
 

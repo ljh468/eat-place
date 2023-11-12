@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+package com.balkari.menori.rpc.GameCommunication.BoardContext;
+
+
+option java_multiple_files = true;
+option java_package = "com.eat.eatplace.rpc";
+option java_outer_classname = "BoardContext";
+
+message BoardPair {
+  Board myBoard = 1;
+  Board opponentBoard = 2;
+}
+
+message Board {
+  string boardId = 1;
+  int64 userId = 2;
+  BlockMap blockMap = 3;
+}
+
+message BlockMap {
+  map<int32, Block> blocks = 2;
+}
+
+message Block {
+  string blockId = 1;
+  int32 categoryId = 2;
+  BlockType blockType = 3;
+}
+
+enum BlockType {
+  NONE = 0;
+  ELEMENT = 1;
+  EFFECT = 2;
+}

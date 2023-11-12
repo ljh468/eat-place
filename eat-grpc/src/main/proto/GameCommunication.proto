@@ -1,25 +1,26 @@
 syntax = "proto3";
 
-package com.balkari.menori.rpc.GameService;
+package com.balkari.menori.rpc.GameCommunication;
+
+import "game/Game.proto";
 
 option java_multiple_files = true;
 option java_package = "com.eat.eatplace.rpc";
-option java_outer_classname = "GameService";
+option java_outer_classname = "GameCommunication";
 
-service Game {
-  rpc requestGameStart (GameRequest) returns (GameResponse) {}
+
+service GameManager {
+  rpc notifyGameStart (GameRequest) returns (GameResponse) {}
   rpc getGame (GameRequest) returns (stream GameResponse) {}
   rpc getGames (stream GameRequest) returns (stream GameResponse) {}
 }
 
 message GameRequest {
   int64 userId = 1;
+  string gameId = 2;
 }
 
 message GameResponse {
-  string gameId = 1;
-  string boardId = 2;
-  int64 userId = 3;
-  string userName= 4;
-  string message = 5;
+  bool isGameStart = 1;
+  GameContext.Game game = 2;
 }

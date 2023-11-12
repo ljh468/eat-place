@@ -1,6 +1,6 @@
 rootProject.name = 'eatplace'
 include 'eat-api'
 include 'user-core'
-include 'eat-protobuf'
+include 'eat-grpc'
 include 'eat-runner'
 

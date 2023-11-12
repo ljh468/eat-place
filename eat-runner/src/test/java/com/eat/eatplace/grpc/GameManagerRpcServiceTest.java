@@ -1,6 +1,6 @@
 package com.eat.eatplace.grpc;
 
-import com.eat.eatplace.rpc.GameGrpc;
+import com.eat.eatplace.rpc.GameManagerGrpc;
 import com.eat.eatplace.rpc.GameRequest;
 import com.eat.eatplace.rpc.GameResponse;
 import io.grpc.ManagedChannel;
@@ -9,12 +9,11 @@ import io.grpc.stub.StreamObserver;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 
-import java.util.Iterator;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
-class GameServiceTest {
+class GameManagerRpcServiceTest {
 //  public static void main(String[] args) throws InterruptedException {
 //    // 서버 주소와 포트에 맞게 ManagedChannel을 설정
 //    ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 8191)
@@ -92,20 +91,21 @@ class GameServiceTest {
 
   public static class GameClient {
 
-    private final GameGrpc.GameStub asyncStub;
+    private final GameManagerGrpc.GameManagerStub asyncStub;
 
     public GameClient(ManagedChannel channel) {
       // 'asyncStub' is for non-blocking/asynchronous calls
-      asyncStub = GameGrpc.newStub(channel);
+      asyncStub = GameManagerGrpc.newStub(channel);
     }
 
     // 요청한 게임 시작에 대한 클라이언트 메소드
     public void requestGameStart(Long userId) {
       GameRequest request = GameRequest.newBuilder().setUserId(userId).build();
-      asyncStub.requestGameStart(request, new StreamObserver<>() {
+      asyncStub.notifyGameStart(request, new StreamObserver<>() {
+
         @Override
         public void onNext(GameResponse value) {
-          System.out.println("Game started: " + value.getGameId());
+          System.out.println("Game started: " + value.getGame());
         }
 
         @Override
@@ -147,8 +147,8 @@ class GameServiceTest {
       StreamObserver<GameRequest> requestObserver = asyncStub.getGames(new StreamObserver<>() {
         @Override
         public void onNext(GameResponse value) {
-          System.out.println("Game stream userId: " + value.getUserId());
-          System.out.println("Game stream message: " + value.getMessage());
+          System.out.println("Game stream userId: " + value.getIsGameStart());
+          System.out.println("Game stream message: " + value.getGame());
         }
 
         @Override

@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package com.balkari.menori.rpc.GameCommunication.GameContext;
+
+import "board/Board.proto";
+
+option java_multiple_files = true;
+option java_package = "com.eat.eatplace.rpc";
+option java_outer_classname = "GameContext";
+
+message Game {
+  GameState state = 1;
+  string gameId = 2;
+  BoardContext.BoardPair boardPair = 3;
+}
+
+message GameState {
+  string previousState = 1;
+  string currentState = 2;
+}
